@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#213b60">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Nöbet">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icons/zzz-icon.svg">
+<link rel="apple-touch-icon" href="./icons/icon-180.png">
+<title>Nöbet Asistanı · Kasım 2026</title>
+<style>
+:root{color-scheme:light;--bg:#f3f6fb;--surface:#fff;--surface2:#f7f9fc;--line:#e1e7f0;--text:#172438;--muted:#718096;--navy:#213b60;--blue:#eaf2ff;--blueText:#28548c;--teal:#e8f7f1;--tealText:#247455;--gold:#fff5df;--goldText:#8b641b;--shadow:0 8px 24px rgba(30,52,80,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{width:70vw;max-width:1200px;min-width:0;margin:0 auto;padding:18px 0 32px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:#e8effa;color:#294e7c;display:grid;place-items:center;font-size:21px}
+h1{font-size:22px;letter-spacing:.2px;margin:0;font-weight:800}.sub{font-size:13px;color:var(--muted);margin-top:3px}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pill{border:1px solid var(--line);background:white;color:var(--navy);border-radius:10px;padding:9px 12px;font-weight:650;font-size:14px;cursor:pointer}.pill.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.pill:hover{filter:brightness(.97)}
+.toolbar{display:flex;gap:6px;margin-bottom:13px}.toolbar input,.toolbar select,.editor input,.editor select{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px;color:var(--text);font:inherit;outline:none;min-width:0}.toolbar input{flex:1}.toolbar select{width:145px}.toolbar input:focus,.toolbar select:focus,.editor input:focus,.editor select:focus{border-color:#8db2e8;box-shadow:0 0 0 3px #eaf2ff}
+.tabs{display:flex;gap:5px;background:#e9eef5;padding:4px;border-radius:12px;margin-bottom:15px}.tabs button{border:0;background:transparent;color:#64748b;padding:9px 13px;border-radius:9px;font-weight:650;font-size:12px;cursor:pointer}.tabs button.active{background:white;color:var(--navy);box-shadow:0 1px 4px #1e355012}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 16px}.metric{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}.metric b{display:block;font-size:21px;color:var(--navy)}.metric span{font-size:11px;color:var(--muted)}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:17px 1px 10px}.sectionhead strong{font-size:15px}.sectionhead small{font-size:10px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.daily-duty-cards .card.wide{grid-column:1/-1}.card{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:13px 14px;box-shadow:var(--shadow);min-width:0}.card.wide{grid-column:1/-1}
+.cardhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.cardhead strong{font-size:13px}.tag{font-size:10px;background:#f0f4fa;color:#64748b;border-radius:20px;padding:5px 8px;white-space:nowrap}
+.expertpair{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:5px 0 12px;max-width:760px}.personbox{border-radius:11px;padding:9px 11px;border:1px solid var(--line);background:#fbfcfe;min-width:0}.personbox.expert{background:var(--blue);border-color:#d8e6fa}.personbox.icap{background:var(--teal);border-color:#d5eee3}.personbox .label{font-size:10px;font-weight:750;letter-spacing:.45px;color:var(--muted);text-transform:uppercase}.personbox.expert .label{color:var(--blueText)}.personbox.icap .label{color:var(--tealText)}.personbox .name{font-size:17px;font-weight:800;margin-top:4px;overflow-wrap:anywhere}.personbox .none{font-size:13px;color:#9aa6b5;font-weight:500}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:8px 0;border-top:1px solid #edf0f5}.row:first-of-type{border-top:0}.role{font-size:13px;color:var(--muted);flex:0 0 105px}.names{font-size:14px;font-weight:650;text-align:right;overflow-wrap:anywhere}
+.editor{display:none;background:#fff;border:1px solid #d9e3f0;border-radius:16px;padding:15px;margin:14px 0;box-shadow:var(--shadow)}.editor.open{display:block}.editor h2{font-size:14px;margin:0 0 5px}.editor .help{font-size:11px;color:var(--muted);margin:0 0 13px}.editorgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#52647a;font-weight:700}.field input,.field select{width:100%;padding:9px 10px;font-size:12px}.editoractions{display:flex;justify-content:flex-end;gap:8px;margin-top:13px;flex-wrap:wrap}.saved{font-size:11px;color:var(--tealText);align-self:center;margin-right:auto}
+.empty{grid-column:1/-1;padding:22px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:14px}
+.monthly-results{display:none;margin:12px 0 18px}.monthly-results.show{display:block}.result-intro{font-size:12px;color:var(--muted);margin:0 0 10px}.result-group{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow)}.result-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:7px}.result-dates{display:flex;flex-wrap:wrap;gap:6px}.date-chip{font-size:11px;color:#36577f;background:#edf3fb;border:1px solid #dce7f5;padding:5px 8px;border-radius:8px}
+footer{text-align:center;color:#8995a5;font-size:10px;margin-top:20px}
+@media(max-width:560px){.app{padding:15px 12px 28px}.toolbar #searchButton{padding:8px 10px;font-size:12px}.cards{grid-template-columns:1fr}.expertpair{gap:7px}.personbox{padding:10px}.personbox .name{font-size:14px}.toolbar select{width:116px}.actions .pill{padding:8px 9px}.editorgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.role{flex-basis:92px}}
+
+/* Full roster table and monthly duty statistics */
+.full-data{margin:22px 0 0}.full-data .sectionhead{margin-top:20px}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.roster-table{border-collapse:separate;border-spacing:0;width:100%;min-width:0;table-layout:fixed;font-size:12px}
+.roster-table th{position:sticky;top:0;background:#edf2f8;color:#40536d;text-align:left;font-size:11px;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+.roster-table td{padding:4px 5px;border-bottom:1px solid #edf0f5;vertical-align:middle}
+.roster-table tr:last-child td{border-bottom:0}.roster-table tr:hover td{background:#f8fbff}
+.roster-table td.datecell{font-weight:750;white-space:nowrap;color:var(--navy)}.roster-table td.daycell{white-space:nowrap;color:var(--muted)}
+.roster-table input{width:100%;min-width:0;padding:6px 5px;border:1px solid transparent;border-radius:6px;background:transparent;font-size:12px;color:var(--text)}
+.roster-table input:hover{border-color:#d9e3f0;background:#fbfdff}.roster-table input:focus{border-color:#8db2e8;background:#fff;box-shadow:0 0 0 2px #eaf2ff}
+.table-note{font-size:10px;color:var(--muted);margin:8px 2px 0}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.stats-panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);min-width:0}
+.stats-title{padding:15px 16px;background:#f6f8fb;border-bottom:1px solid var(--line);font-size:12px;font-weight:800;color:var(--navy)}
+.stats-table{width:100%;border-collapse:collapse;font-size:13px}.stats-table th,.stats-table td{padding:10px 12px;text-align:left;border-bottom:1px solid #edf0f5}
+.stats-table th{color:#718096;font-size:10px;background:#fcfdff}.stats-table td.num,.stats-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+.stats-table tr:last-child td{border-bottom:0}.stats-table td:first-child{font-weight:650}
+.stats-empty{padding:14px;color:var(--muted);font-size:11px}.save-indicator{font-size:10px;color:#247455;margin-left:8px;font-weight:700}
+@media(max-width:700px){.stats-grid{grid-template-columns:1fr}.full-data{margin-left:-2px;margin-right:-2px}}
+
+
+/* Expanded roster and grouped interactive analysis */
+.full-data{width:100%}
+.roster-table{width:100%;min-width:0;table-layout:fixed;font-size:10.5px}
+.roster-table th{font-size:10px;line-height:1.2;padding:6px 4px;white-space:normal;min-width:0;overflow-wrap:anywhere}
+.roster-table td{padding:2px 3px;overflow:hidden}
+.roster-table input{width:100%;min-width:0;padding:5px 3px;font-size:10px;line-height:1.25;border-radius:5px}
+.roster-table tr.saturday td{background:#edf5ff}
+.roster-table tr.sunday td{background:#fff3e9}
+.roster-table tr.saturday:hover td{background:#e3efff}
+.roster-table tr.sunday:hover td{background:#ffead9}
+.unified-panel{margin-top:12px;overflow:visible}
+.unified-table-wrap{width:100%;overflow:visible}
+.unified-table{width:100%;border-collapse:collapse;table-layout:auto;font-size:12px}
+.unified-table th{background:#f5f7fa;color:#53657b;text-align:center;padding:8px 5px;border-bottom:1px solid var(--line);white-space:normal;cursor:pointer;user-select:none}
+.unified-table th:first-child,.unified-table td:first-child{text-align:left}
+.unified-table th:hover{background:#eaf1fa;color:#213b60}
+.unified-table td{padding:6px 5px;border-bottom:1px solid #edf0f5;text-align:center;white-space:nowrap}
+.unified-table tr:last-child td{border-bottom:0}
+.unified-table .person-name{text-align:left;font-weight:750;min-width:105px}
+.unified-table .group-select{font:inherit;font-size:11px;padding:5px 6px;border:1px solid #dbe3ed;border-radius:7px;background:#fff;color:#31465f;max-width:110px}
+.unified-table .count-link{border:0;background:#edf3fb;color:#244b79;border-radius:6px;padding:4px 7px;min-width:25px;font:inherit;font-weight:750;cursor:pointer}
+.unified-table .count-link:hover{background:#dceafd}
+.unified-table .count-link.zero{background:transparent;color:#9aa6b5}
+.group-band th{background:#e9eef5!important;color:#233c5c;font-weight:850;text-align:left!important;padding:8px 10px!important}
+.group-band .group-count{font-weight:500;color:#718096;margin-left:7px}
+.sort-indicator{font-size:9px;color:#2d6096;margin-left:3px}
+.dates-dialog{border:0;border-radius:16px;padding:18px;width:min(520px,92vw);max-height:80vh;box-shadow:0 18px 60px #10243b40}
+.dates-dialog::backdrop{background:#14233866}
+.dialog-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;color:#213b60}
+.date-list{display:grid;gap:7px;max-height:55vh;overflow:auto}
+.date-list-item{padding:9px 11px;border:1px solid #e1e7f0;border-radius:9px;background:#f8fafc;font-size:13px}
+@media(max-width:1100px){
+ .app{width:calc(100% - 24px);max-width:none;padding:16px 0 28px}
+ .roster-table{min-width:760px}
+ .table-wrap{overflow:auto}
+ .unified-table-wrap{overflow:auto}
+ .unified-table{min-width:1450px}
+}
+
+
+.weekday-summary{margin:12px 0 16px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;box-shadow:var(--shadow)}
+.weekday-summary-title{font-size:13px;font-weight:800;color:var(--navy);margin:0 0 8px}
+.weekday-table-wrap{overflow-x:auto}
+.weekday-table{width:100%;min-width:720px;border-collapse:collapse;table-layout:fixed}
+.weekday-table th,.weekday-table td{padding:8px 5px;text-align:center;font-size:11px;white-space:nowrap;border-bottom:1px solid #edf0f5}
+.weekday-table thead th{background:#edf2f8;color:#40536d;font-weight:750}
+.weekday-table tbody th{text-align:left;color:var(--navy);background:#f8fafc}
+.weekday-table td{font-weight:750;color:var(--text)}
+.weekday-table .weekday-total{background:#f2f5f9;color:var(--navy)}
+.weekday-note{font-size:10px;color:var(--muted);margin:8px 2px 0}
+.empty-weekend-row th{background:#f1f5f9;color:var(--navy);text-align:left!important}
+.empty-weekend-row td{background:#f8fafc;text-align:center;font-weight:750;color:var(--navy)}
+.empty-weekend-row td strong{font-size:15px}
+
+/* PWA / phone layout: preserve all roster columns without horizontal scrolling. */
+.logo img{width:100%;height:100%;display:block;border-radius:inherit;object-fit:cover}
+.install-btn{white-space:nowrap}
+.day-short,.weekday-short{display:none}
+@media(max-width:700px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ body{font-size:13px;line-height:1.3}
+ .app{width:100%;max-width:100%;min-width:0;margin:0;padding:8px 4px calc(14px + env(safe-area-inset-bottom))}
+ header{width:100%;gap:5px;margin:0 0 7px;align-items:center}
+ .brand{gap:6px;min-width:0}
+ .logo{width:31px;height:31px;min-width:31px;border-radius:8px}
+ h1{font-size:clamp(14px,4vw,17px);letter-spacing:0;line-height:1.1;white-space:nowrap}
+ .sub{font-size:9px;margin-top:2px}
+ .actions{display:flex;gap:4px;flex:0 0 auto;flex-wrap:nowrap}
+ .actions .pill{font-size:9px;padding:6px 7px;border-radius:7px}
+ .toolbar{width:100%;min-width:0;gap:4px;margin:0 0 7px;align-items:stretch}
+ .toolbar input{min-width:0;width:0;flex:1;padding:7px 7px;font-size:11px;border-radius:8px}
+ .toolbar #searchButton{flex:0 0 auto;padding:6px 8px;font-size:9px;border-radius:8px}
+ .toolbar select{flex:0 0 82px;width:82px;min-width:0;padding:6px 2px;font-size:9px;border-radius:8px}
+ .tabs{width:100%;gap:3px;padding:3px;margin:0 0 7px;border-radius:8px}
+ .tabs button{min-width:0;flex:1;padding:6px 3px;font-size:9px;line-height:1.15}
+ .sectionhead{gap:4px;margin:7px 1px 4px;align-items:center}
+ .sectionhead strong{font-size:11px;line-height:1.15}
+ .sectionhead small{font-size:7px;line-height:1.1;text-align:right}
+ .expertpair{width:100%;max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:4px 0 7px}
+ .personbox{min-width:0;padding:6px 6px;border-radius:8px}
+ .personbox .label{font-size:7px;line-height:1.1;letter-spacing:0;overflow-wrap:anywhere}
+ .personbox .name{font-size:12px;line-height:1.15;margin-top:3px}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+ .daily-duty-cards .card.wide{grid-column:1/-1}
+ .card{min-width:0;padding:7px;border-radius:8px}
+ .cardhead{gap:3px;margin-bottom:3px}
+ .cardhead strong{font-size:9px;line-height:1.1}
+ .names{font-size:10px;line-height:1.2}
+ .full-data{width:100%;margin:8px 0 0}
+ .full-data .sectionhead{margin:8px 1px 4px}
+ .table-wrap{width:100%;max-width:100%;overflow:hidden;border-radius:7px}
+ .roster-table,.weekend-roster{display:table;width:100%!important;min-width:0!important;max-width:100%;table-layout:fixed!important;border-spacing:0;font-size:7px}
+ .roster-table th{font-size:clamp(5.8px,1.65vw,7.3px);line-height:1.05;padding:3px 1px;white-space:normal;overflow-wrap:anywhere;word-break:normal;text-align:center}
+ .roster-table td{min-width:0;padding:1px 1px;overflow:hidden;text-align:center;line-height:1.05}
+ .roster-table td.datecell,.roster-table td.daycell{font-size:clamp(6px,1.7vw,7.4px);line-height:1.05;white-space:normal;text-align:center;padding:2px 0;overflow-wrap:anywhere}
+ .roster-table input{display:block;width:100%!important;max-width:100%;min-width:0!important;padding:2px 0!important;margin:0;font-size:clamp(5.8px,1.65vw,7.3px)!important;line-height:1.05;letter-spacing:-.25px;text-align:center;border-radius:2px;white-space:nowrap}
+ .main-roster colgroup col:nth-child(1){width:7%!important}
+ .main-roster colgroup col:nth-child(2){width:7%!important}
+ .main-roster colgroup col:nth-child(3){width:13%!important}
+ .main-roster colgroup col:nth-child(4){width:13%!important}
+ .main-roster colgroup col:nth-child(5){width:22%!important}
+ .main-roster colgroup col:nth-child(6){width:19%!important}
+ .main-roster colgroup col:nth-child(7){width:19%!important}
+ .weekend-roster colgroup col:nth-child(1){width:7%!important}
+ .weekend-roster colgroup col:nth-child(2){width:12%!important}
+ .weekend-roster colgroup col:nth-child(3){width:17%!important}
+ .weekend-roster colgroup col:nth-child(4){width:17%!important}
+ .weekend-roster colgroup col:nth-child(5){width:17%!important}
+ .weekend-roster colgroup col:nth-child(6){width:15%!important}
+ .weekend-roster colgroup col:nth-child(7){width:15%!important}
+ .day-full,.weekday-full{display:none}
+ .day-short,.weekday-short{display:inline}
+ .table-note{font-size:7.5px;line-height:1.15;margin:4px 1px}
+ .weekday-summary{padding:5px;margin:7px 0 9px;border-radius:7px}
+ .weekday-summary-title{font-size:9px;line-height:1.15;margin-bottom:4px}
+ .weekday-table-wrap{overflow:hidden}
+ .weekday-table{width:100%!important;min-width:0!important;table-layout:fixed}
+ .weekday-table th,.weekday-table td{font-size:clamp(5px,1.45vw,6.5px);line-height:1.05;padding:4px 1px;white-space:normal;overflow-wrap:anywhere}
+ .weekday-table th:first-child,.weekday-table tbody th{width:70px}
+ .weekday-note{font-size:7px;line-height:1.15;margin-top:5px}
+ .monthly-results{margin:6px 0 10px}
+ .monthly-results .table-wrap{overflow:hidden}
+ .monthly-results .stats-table{width:100%;table-layout:fixed;font-size:8px}
+ .monthly-results .stats-table th,.monthly-results .stats-table td{font-size:7.5px;padding:4px 2px;overflow-wrap:anywhere}
+ .result-intro{font-size:8px;margin-bottom:5px}
+ footer{font-size:7px;margin-top:8px}
+}
+@media(min-width:701px) and (max-width:1100px){
+ .app{width:94vw;max-width:none}
+ .roster-table{min-width:0!important}
+ .table-wrap{overflow:hidden}
+ .weekday-table{min-width:0!important}
+}
+
+</style></head>
+<body><main class="app">
+<header>
+ <div class="brand"><div class="logo"><img src="./icons/zzz-icon.svg" alt="ZZZ uyku simgesi"></div><div><h1>NÖBET ASİSTANI</h1><div class="sub" id="monthLabel">Kasım 2026</div></div></div>
+ <div class="actions"><button class="pill" id="installButton" type="button" hidden>Uygulamayı yükle</button><button class="pill primary" id="reset">Sıfırla</button></div>
+</header>
+<div class="toolbar"><input id="search" type="search" placeholder="Kasım nöbet listesinde isim ara…" autocomplete="off"><button class="pill primary" id="searchButton" type="button">Ara</button><select id="dateSelect" aria-label="Tarih seç"></select></div>
+<nav class="tabs"><button class="active" data-tab="daily">Günlük nöbet</button><button data-tab="weekend">Hafta sonu ek görevleri</button></nav>
+<section class="editor" id="editor">
+ <h2>Liste verilerini düzenle</h2><p class="help">Seçili tarihin bilgilerini değiştir. Birden fazla isim gireceksen virgül veya / ile ayır. Kaydettiğinde değişiklikler bu cihazda saklanır.</p>
+ <div class="editorgrid">
+  <div class="field"><label for="editDate">Düzenlenecek tarih</label><select id="editDate"></select></div>
+  <div class="field"><label for="editMode">Düzenleme türü</label><select id="editMode"><option value="daily">Günlük nöbet</option><option value="weekend">Hafta sonu / ek görev</option></select></div>
+  <div class="field" id="fExpert"><label for="vExpert">Nöbetçi uzman</label><input id="vExpert"></div>
+  <div class="field" id="fOncall"><label for="vOncall">İcapçı</label><input id="vOncall"></div>
+  <div class="field full" id="fOR"><label for="vOR">Ameliyathane personeli</label><input id="vOR" placeholder="İsimleri virgülle ayır"></div>
+  <div class="field" id="fGY2"><label for="vGY2">2. Kat GYBÜ</label><input id="vGY2" placeholder="İsimleri virgülle ayır"></div>
+  <div class="field" id="fGY7"><label for="vGY7">7. Kat GYBÜ</label><input id="vGY7" placeholder="İsimleri virgülle ayır"></div>
+  <div class="field full" id="fWCall"><label for="vWCall">İcapçı uzman / mesai</label><input id="vWCall"></div>
+  <div class="field" id="fWAssist"><label for="vWAssist">Nöbetçi asistan</label><input id="vWAssist"></div>
+  <div class="field" id="fWPost"><label for="vWPost">Nöbet ertesi asistan</label><input id="vWPost"></div>
+  <div class="field" id="fWOR"><label for="vWOR">Ek mesai ameliyathane</label><input id="vWOR"></div>
+  <div class="field" id="fW2F"><label for="vW2F">Ek mesai 2. kat</label><input id="vW2F"></div>
+ </div>
+ <div class="editoractions"><span class="saved" id="saveStatus"></span><button class="pill" id="cancelEdit">Kapat</button><button class="pill primary" id="saveEdit">Değişiklikleri Kaydet</button></div>
+</section>
+<section id="monthlyResults" class="monthly-results" aria-live="polite"></section>
+<section id="dailyView">
+ <div class="sectionhead"><strong id="dateLabel">Ameliyathane nöbeti</strong><small></small></div>
+ <div class="expertpair" id="expertPair">
+  <div class="personbox"><div class="label">Ameliyathane nöbetçi uzmanı</div><div class="name" id="expertName">—</div></div>
+  <div class="personbox"><div class="label">Ameliyathane icapçı uzmanı</div><div class="name" id="onCallName">—</div></div>
+ </div>
+ <div class="cards daily-duty-cards" id="dailyCards"></div>
+</section>
+<section id="weekendView" style="display:none"><div class="sectionhead"><strong>Hafta sonu / ek görevler</strong><small>EK GÖREV TABLOSU</small></div><div class="cards" id="weekendCards"></div></section>
+<section class="full-data" id="fullData">
+ <div class="sectionhead"><strong>Tüm Kasım nöbet listesi</strong><small>HÜCRELERİ DÜZENLEYEBİLİRSİN <span id="tableSaved" class="save-indicator"></span></small></div>
+ <div class="table-wrap"><table class="roster-table main-roster"><colgroup><col style="width:8%"><col style="width:9%"><col style="width:15%"><col style="width:15%"><col style="width:19%"><col style="width:17%"><col style="width:17%"></colgroup><thead><tr>
+ <th>Tarih</th><th>Gün</th><th>Ameliyathane nöbetçi uzman</th><th>Ameliyathane icapçı uzman</th><th>Ameliyathane asistan</th><th>2. Kat GYBÜ</th><th>7. Kat GYBÜ</th>
+ </tr></thead><tbody id="rosterBody"></tbody></table></div>
+ <div class="sectionhead" style="margin-top:18px"><strong>Hafta sonu / ek görevler</strong><small>EXCEL'DEKİ ALT TABLO DÜZENİ</small></div>
+ <div class="table-wrap"><table class="roster-table weekend-roster"><colgroup><col style="width:9%"><col style="width:13%"><col style="width:19%"><col style="width:17%"><col style="width:17%"><col style="width:13%"><col style="width:12%"></colgroup><thead><tr>
+ <th>Tarih</th><th>Nöbetçi uzman</th><th>İcapçı uzman / mesai</th><th>Nöbetçi asistan</th><th>Nöbet ertesi asistan</th><th>Ek mesai ameliyathane</th><th>Ek mesai 2. kat</th>
+ </tr></thead><tbody id="weekendRosterBody"></tbody></table></div>
+ <p class="table-note">Tablolardaki hücreleri doğrudan tıklayıp değiştirebilirsin. Birden fazla isim için virgül kullan. Değişiklikler otomatik kaydedilir ve analizler hemen güncellenir.</p>
+ <div id="unifiedStats" hidden></div>
+ <dialog id="datesDialog" class="dates-dialog">
+  <div class="dialog-head"><strong id="datesDialogTitle">Görev tarihleri</strong><button type="button" class="pill" id="closeDatesDialog">Kapat</button></div>
+  <div id="datesDialogBody"></div>
+ </dialog>
+</section>
+<footer>Kasım 2026 · Veriler cihazında saklanır · Çevrimdışı kullanılabilir</footer>
+</main>
+<script>
+const ORIGINAL={"month": "Kasım 2026", "daily": [{"day": 1, "date": "2026-11-01", "expert": "CEM", "on_call": "", "operating_room": ["GÖKHAN", "BURAKCAN"], "gybu_2": ["ZEKİ"], "gybu_7": ["TİJEN"]}, {"day": 2, "date": "2026-11-02", "expert": "BAHADIR", "on_call": "AYŞE", "operating_room": ["ELİF", "ÇAĞLA"], "gybu_2": ["CEM"], "gybu_7": ["ERSİN"]}, {"day": 3, "date": "2026-11-03", "expert": "PINAR", "on_call": "BURAK", "operating_room": ["İHSAN", "DAMLA"], "gybu_2": ["ÖKKEŞ"], "gybu_7": ["TİJEN", "HALİL"]}, {"day": 4, "date": "2026-11-04", "expert": "YAŞAR", "on_call": "CEM", "operating_room": ["GÖKHAN", "BURAKCAN"], "gybu_2": ["DENİZ", "AYŞE"], "gybu_7": ["ERSİN"]}, {"day": 5, "date": "2026-11-05", "expert": "MERVE", "on_call": "KORAY", "operating_room": ["ANIL", "MERVE"], "gybu_2": ["CEM", "ÇAĞLA"], "gybu_7": ["TİJEN", "HALİL"]}, {"day": 6, "date": "2026-11-06", "expert": "FATİH", "on_call": "CEM", "operating_room": ["İHSAN", "DAMLA"], "gybu_2": ["MERT"], "gybu_7": ["TİJEN"]}, {"day": 7, "date": "2026-11-07", "expert": "KORAY", "on_call": "AYŞE", "operating_room": ["ELİF", "BURAKCAN"], "gybu_2": ["TURAN"], "gybu_7": ["ERSİN"]}, {"day": 8, "date": "2026-11-08", "expert": "FATİH", "on_call": "", "operating_room": ["İHSAN", "DAMLA"], "gybu_2": ["TURAN"], "gybu_7": ["TİJEN"]}, {"day": 9, "date": "2026-11-09", "expert": "MERVE", "on_call": "BURAK", "operating_room": ["GÖKHAN", "MERVE"], "gybu_2": ["MEHMET"], "gybu_7": ["ERSİN"]}, {"day": 10, "date": "2026-11-10", "expert": "YAŞAR", "on_call": "PINAR", "operating_room": ["ELİF", "BURAKCAN"], "gybu_2": ["ABDÜLKADİR"], "gybu_7": ["TİJEN", "HALİL"]}, {"day": 11, "date": "2026-11-11", "expert": "CEM", "on_call": "MERVE", "operating_room": ["CEMRE", "MERVE"], "gybu_2": ["ÖKKEŞ"], "gybu_7": ["ERSİN"]}, {"day": 12, "date": "2026-11-12", "expert": "BAHADIR", "on_call": "YAŞAR", "operating_room": ["GÖKHAN", "DAMLA"], "gybu_2": ["DENİZ"], "gybu_7": ["BATUHAN"]}, {"day": 13, "date": "2026-11-13", "expert": "PINAR", "on_call": "KORAY", "operating_room": ["ELİF", "ÇAĞLA"], "gybu_2": ["ALİ"], "gybu_7": ["TİJEN", "HALİL"]}, {"day": 14, "date": "2026-11-14", "expert": "FATİH", "on_call": "CEM", "operating_room": ["CEMRE", "DAMLA"], "gybu_2": ["ERSİN"], "gybu_7": ["ÇİÇEK"]}, {"day": 15, "date": "2026-11-15", "expert": "BURAK", "on_call": "", "operating_room": ["ELİF", "ÇAĞLA"], "gybu_2": ["TURAN"], "gybu_7": ["TİJEN", "HALİL"]}, {"day": 16, "date": "2026-11-16", "expert": "MERVE", "on_call": "FATİH", "operating_room": ["İHSAN", "MERVE"], "gybu_2": ["ÖKKEŞ"], "gybu_7": ["ERSİN"]}, {"day": 17, "date": "2026-11-17", "expert": "BAHADIR", "on_call": "PINAR", "operating_room": ["CEMRE", "DAMLA"], "gybu_2": ["DENİZ", "AYŞE"], "gybu_7": ["TİJEN", "HALİL"]}, {"day": 18, "date": "2026-11-18", "expert": "CEM", "on_call": "BURAK", "operating_room": ["ANIL", "ÇAĞLA"], "gybu_2": ["ELİF"], "gybu_7": ["ERSİN"]}, {"day": 19, "date": "2026-11-19", "expert": "PINAR", "on_call": "YAŞAR", "operating_room": ["CEMRE", "BURAKCAN", "DAMLA"], "gybu_2": ["CEM", "AYŞE"], "gybu_7": ["ÇİÇEK"]}, {"day": 20, "date": "2026-11-20", "expert": "BAHADIR", "on_call": "FATİH", "operating_room": ["GÖKHAN", "MERVE"], "gybu_2": ["TURAN"], "gybu_7": ["TİJEN"]}, {"day": 21, "date": "2026-11-21", "expert": "BURAK", "on_call": "MERVE", "operating_room": ["ANIL", "ÇAĞLA"], "gybu_2": ["TURAN"], "gybu_7": ["BATUHAN", "HALİL"]}, {"day": 22, "date": "2026-11-22", "expert": "MERVE", "on_call": "", "operating_room": ["CEMRE", "MERVE"], "gybu_2": ["DENİZ", "AYŞE"], "gybu_7": ["ERSİN"]}, {"day": 23, "date": "2026-11-23", "expert": "KORAY", "on_call": "CEM", "operating_room": ["İHSAN", "DAMLA"], "gybu_2": ["ZEKİ"], "gybu_7": ["ERSİN"]}, {"day": 24, "date": "2026-11-24", "expert": "FATİH", "on_call": "PINAR", "operating_room": ["GÖKHAN", "BURAKCAN"], "gybu_2": ["ERSİN"], "gybu_7": ["ÇİÇEK"]}, {"day": 25, "date": "2026-11-25", "expert": "YAŞAR", "on_call": "AYŞE", "operating_room": ["İHSAN", "MERVE"], "gybu_2": ["ELİF"], "gybu_7": ["BATUHAN", "HALİL"]}, {"day": 26, "date": "2026-11-26", "expert": "BURAK", "on_call": "KORAY", "operating_room": ["CEMRE", "ÇAĞLA"], "gybu_2": ["DENİZ", "GÖKHAN"], "gybu_7": ["ERSİN"]}, {"day": 27, "date": "2026-11-27", "expert": "CEM", "on_call": "FATİH", "operating_room": ["ANIL", "BURAKCAN"], "gybu_2": ["ERSİN"], "gybu_7": ["ÇİÇEK"]}, {"day": 28, "date": "2026-11-28", "expert": "PINAR", "on_call": "YAŞAR", "operating_room": ["İHSAN", "MERVE"], "gybu_2": ["ZEKİ"], "gybu_7": ["ERSİN"]}, {"day": 29, "date": "2026-11-29", "expert": "KORAY", "on_call": "", "operating_room": ["ANIL", "BURAKCAN"], "gybu_2": ["ERSİN"], "gybu_7": ["ÇİÇEK"]}, {"day": 30, "date": "2026-11-30", "expert": "BURAK", "on_call": "MERVE", "operating_room": ["CEMRE", "ÇAĞLA"], "gybu_2": ["CEM", "AYŞE"], "gybu_7": ["İHSAN"]}], "weekend": [{"date": "2026-11-07", "expert": "KORAY", "on_call_expert_mesai": "ELVAN H. - YAHYA H.", "on_call_assistants": ["ELİF", "BURAKCAN"], "post_call_assistants": ["İHSAN", "DAMLA"], "extra_or": ["HİLAL"], "extra_2f": ["AYŞE"]}, {"date": "2026-11-14", "expert": "FATİH", "on_call_expert_mesai": "HÜSEYİN H. - TÜMAY H.", "on_call_assistants": ["CEMRE", "DAMLA"], "post_call_assistants": ["ELİF", "ÇAĞLA"], "extra_or": ["HİLAL"], "extra_2f": ["İPEK"]}, {"date": "2026-11-21", "expert": "BURAK", "on_call_expert_mesai": "YUNUS H. - BAHADIR. H", "on_call_assistants": ["ANIL", "ÇAĞLA"], "post_call_assistants": ["GÖKHAN", "MERVE"], "extra_or": ["İPEK"], "extra_2f": ["AYŞE"]}, {"date": "2026-11-28", "expert": "PINAR", "on_call_expert_mesai": "PELİN H.", "on_call_assistants": ["İHSAN", "MERVE"], "post_call_assistants": ["ANIL", "BURAKCAN"], "extra_or": ["HALİL"], "extra_2f": ["ÇAĞLA"]}]};
+const KEY="nobet-asistani-kasim-2026-v2";
+let data=load();
+function load(){try{const v=localStorage.getItem(KEY);return v?JSON.parse(v):JSON.parse(JSON.stringify(ORIGINAL))}catch(e){return JSON.parse(JSON.stringify(ORIGINAL))}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const split=s=>String(s||"").split(/[\/,;]+/).map(x=>x.trim()).filter(Boolean);
+const fmt=s=>new Date(s+"T12:00:00").toLocaleDateString("tr-TR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+function setName(id,val){$(id).innerHTML=val?esc(val):'<span class="none">Atanmamış</span>'}
+function card(title,tag,rows){return `<article class="card"><div class="cardhead"><strong>${esc(title)}</strong><span class="tag">${esc(tag)}</span></div>${rows.map(([r,v])=>`<div class="row"><span class="role">${esc(r)}</span><span class="names">${Array.isArray(v)?(v.length?v.map(esc).join(" · "):'<span class="none">—</span>'):(v?esc(v):'<span class="none">—</span>')}</span></div>`).join("")}</article>`}
+function selected(){return data.daily.find(x=>x.date===$("dateSelect").value)||data.daily[0]}
+function renderDaily(){
+ const d=selected(),q=$("search").value.trim().toLocaleUpperCase("tr-TR");
+ $("dateLabel").textContent=fmt(d.date);
+ setName("expertName",d.expert);setName("onCallName",d.on_call);
+ const rows=[
+  ["Ameliyathane Asistan",d.operating_room,"wide"],
+  ["2. Kat GYBÜ",d.gybu_2,""],
+  ["7. Kat GYBÜ",d.gybu_7,""]
+ ];
+ const filtered=rows.filter(([r,v])=>(r+" "+(v||[]).join(" ")).toLocaleUpperCase("tr-TR").includes(q));
+ $("dailyCards").innerHTML=filtered.length?filtered.map(([r,v,cls])=>
+  `<article class="card ${cls}"><div class="cardhead"><strong>${esc(r)}</strong></div><div class="names" style="text-align:left;padding:5px 0">${v&&v.length?v.map(esc).join(" · "):'<span class="none">—</span>'}</div></article>`
+ ).join(""):'<div class="empty">Aramana uygun kayıt bulunamadı.</div>';
+}
+function renderWeekend(){
+ const q=$("search").value.trim().toLocaleUpperCase("tr-TR");
+ const list=data.weekend.filter(d=>!q||JSON.stringify(d).toLocaleUpperCase("tr-TR").includes(q));
+ $("weekendCards").innerHTML=list.length?list.map(d=>card(fmt(d.date),"Hafta sonu",[
+ ["Nöbetçi uzman",d.expert],["İcapçı uzman / mesai",d.on_call_expert_mesai],["Nöbetçi asistan",d.on_call_assistants],["Nöbet ertesi asistan",d.post_call_assistants],["Ek mesai ameliyathane",d.extra_or],["Ek mesai 2. kat",d.extra_2f]
+ ])).join(""):'<div class="empty">Aramana uygun ek görev bulunamadı.</div>';
+}
+data.daily.forEach(d=>{const o=document.createElement("option");o.value=d.date;o.textContent=fmt(d.date);$("dateSelect").append(o)});
+data.daily.forEach(d=>{const o=document.createElement("option");o.value=d.date;o.textContent=fmt(d.date);$("editDate").append(o)});
+function localISODate(date=new Date()){
+ const y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,"0"),d=String(date.getDate()).padStart(2,"0");
+ return `${y}-${m}-${d}`;
+}
+function selectTodayIfAvailable(){
+ const today=localISODate();
+ const available=data.daily.some(d=>d.date===today);
+ $("dateSelect").value=available?today:(data.daily[0]?.date||"");
+ if(!$("search").value.trim())renderDaily();
+}
+function scheduleMidnightRefresh(){
+ const now=new Date();
+ const next=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1,0,0,2);
+ setTimeout(()=>{
+  selectTodayIfAvailable();
+  scheduleMidnightRefresh();
+ },Math.max(1000,next-now));
+}
+$("dateSelect").value="2026-11-05";$("editDate").value="2026-11-05";
+selectTodayIfAvailable();
+scheduleMidnightRefresh();
+document.addEventListener("visibilitychange",()=>{
+ if(!document.hidden)selectTodayIfAvailable();
+});
+function updateEditorFields(){
+ const mode=$("editMode").value,isD=mode==="daily";
+ ["fExpert","fOncall","fOR","fGY2","fGY7"].forEach(id=>$(id).style.display=isD?"flex":"none");
+ ["fWCall","fWAssist","fWPost","fWOR","fW2F"].forEach(id=>$(id).style.display=isD?"none":"flex");
+}
+function fillEditor(){
+ const date=$("editDate").value,mode=$("editMode").value;updateEditorFields();
+ if(mode==="daily"){
+  const d=data.daily.find(x=>x.date===date)||data.daily[0];
+  $("vExpert").value=d.expert||"";$("vOncall").value=d.on_call||"";$("vOR").value=d.operating_room.join(", ");$("vGY2").value=d.gybu_2.join(", ");$("vGY7").value=d.gybu_7.join(", ");
+ }else{
+  const d=data.weekend.find(x=>x.date===date)||{};
+  $("vExpert").value=d.expert||"";$("vWCall").value=d.on_call_expert_mesai||"";$("vWAssist").value=(d.on_call_assistants||[]).join(", ");$("vWPost").value=(d.post_call_assistants||[]).join(", ");$("vWOR").value=(d.extra_or||[]).join(", ");$("vW2F").value=(d.extra_2f||[]).join(", ");
+ }
+}
+
+$("cancelEdit").addEventListener("click",()=>$("editor").classList.remove("open"));
+$("editDate").addEventListener("change",fillEditor);$("editMode").addEventListener("change",fillEditor);
+$("saveEdit").addEventListener("click",()=>{
+ const date=$("editDate").value,mode=$("editMode").value;
+ if(mode==="daily"){
+  const d=data.daily.find(x=>x.date===date);if(!d)return;
+  d.expert=$("vExpert").value.trim();d.on_call=$("vOncall").value.trim();d.operating_room=split($("vOR").value);d.gybu_2=split($("vGY2").value);d.gybu_7=split($("vGY7").value);
+  if($("dateSelect").value===date)renderDaily();
+ }else{
+  let d=data.weekend.find(x=>x.date===date);
+  if(!d){d={date,expert:"",on_call_expert_mesai:"",on_call_assistants:[],post_call_assistants:[],extra_or:[],extra_2f:[]};data.weekend.push(d);data.weekend.sort((a,b)=>a.date.localeCompare(b.date))}
+  d.expert=$("vExpert").value.trim();d.on_call_expert_mesai=$("vWCall").value.trim();d.on_call_assistants=split($("vWAssist").value);d.post_call_assistants=split($("vWPost").value);d.extra_or=split($("vWOR").value);d.extra_2f=split($("vW2F").value);
+  renderWeekend();
+ }
+ try{localStorage.setItem(KEY,JSON.stringify(data));$("saveStatus").textContent="Kaydedildi";setTimeout(()=>$("saveStatus").textContent="",2200)}catch(e){$("saveStatus").textContent="Kaydedilemedi: tarayıcı depolaması kapalı"}
+ renderRosterTable();renderDutyStats();
+});
+$("reset").addEventListener("click",()=>{if(confirm("Yaptığın tüm değişiklikler silinip orijinal Kasım 2026 listesi yüklensin mi?")){data=JSON.parse(JSON.stringify(ORIGINAL));localStorage.removeItem(KEY);renderDaily();renderWeekend();fillEditor();renderRosterTable();renderWeekendRosterTable();renderDutyStats();$("saveStatus").textContent="Orijinal liste yüklendi"}});
+function normalizeName(s){return String(s||"").toLocaleUpperCase("tr-TR").trim()}
+function weekdayDutySummary(query){
+ const q=normalizeName(query);
+ const dutyDays=new Set(), icapDays=new Set();
+ const matches=v=>normalizeName(v).includes(q);
+ const addDuty=(date, values)=>{
+  const vals=Array.isArray(values)?values:[values];
+  if(vals.some(v=>v && matches(v))) dutyDays.add(date);
+ };
+ const addIcap=(date, value)=>{
+  if(value && matches(value)) icapDays.add(date);
+ };
+ // Main daily roster: expert duty and clinical duty locations count as duty.
+ data.daily.forEach(d=>{
+  addDuty(d.date,d.expert);
+  addIcap(d.date,d.on_call);
+  addDuty(d.date,d.operating_room||[]);
+  addDuty(d.date,d.gybu_2||[]);
+  addDuty(d.date,d.gybu_7||[]);
+ });
+ // Weekend table: count assigned duty and extra work; exclude post-call assistants.
+ data.weekend.forEach(w=>{
+  addDuty(w.date,w.expert);
+  addIcap(w.date,w.on_call_expert_mesai);
+  addDuty(w.date,w.on_call_assistants||[]);
+  addDuty(w.date,w.extra_or||[]);
+  addDuty(w.date,w.extra_2f||[]);
+ });
+ const days=["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
+ const counts=set=>{
+  const result=Array(7).fill(0);
+  set.forEach(date=>{
+   const jsDay=new Date(date+"T12:00:00").getDay();
+   result[(jsDay+6)%7]++;
+  });
+  return result;
+ };
+ const dutyCounts=counts(dutyDays), icapCounts=counts(icapDays);
+ const hasIcap=icapDays.size>0 || data.daily.some(d=>d.on_call&&matches(d.on_call)) ||
+   data.weekend.some(w=>w.on_call_expert_mesai&&matches(w.on_call_expert_mesai));
+ // A weekend block is a complete Saturday-Sunday pair present in this month's roster.
+ const rosterDates=new Set(data.daily.map(d=>d.date));
+ const saturdays=data.daily.filter(d=>new Date(d.date+"T12:00:00").getDay()===6);
+ const weekendBlocks=saturdays.map(sat=>{
+  const sundayDate=new Date(new Date(sat.date+"T12:00:00").getTime()+86400000).toISOString().slice(0,10);
+  return {saturday:sat.date,sunday:sundayDate};
+ }).filter(block=>rosterDates.has(block.sunday));
+ const emptyWeekends=weekendBlocks.filter(block=>
+  !dutyDays.has(block.saturday)&&!dutyDays.has(block.sunday)
+ ).length;
+ const row=(label,values,total)=>`<tr><th>${label}</th>${values.map(n=>`<td>${n||"—"}</td>`).join("")}<td class="weekday-total">${total}</td></tr>`;
+ return `<div class="weekday-summary">
+  <div class="weekday-summary-title">Haftanın günlerine göre görev dağılımı</div>
+  <div class="table-wrap weekday-table-wrap"><table class="stats-table weekday-table">
+   <thead><tr><th>Görev türü</th>${days.map((d,i)=>`<th><span class="weekday-full">${d}</span><span class="weekday-short">${["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"][i]}</span></th>`).join("")}<th>Toplam</th></tr></thead>
+   <tbody>${row("Nöbet / görev",dutyCounts,dutyDays.size)}${hasIcap?row("İcap",icapCounts,icapDays.size):""}
+    <tr class="empty-weekend-row"><th>Boş hafta sonu</th><td colspan="8"><strong>${emptyWeekends}</strong> / ${weekendBlocks.length} hafta sonu</td></tr>
+   </tbody>
+  </table></div>
+  <p class="weekday-note">Boş hafta sonu: Cumartesi ve pazarın ikisinde de nöbet/görev bulunmayan tam hafta sonu bloklarının sayısıdır. Nöbet sayımına ameliyathane, 2. Kat GYBÜ, 7. Kat GYBÜ, nöbetçi asistan ve ek mesai kayıtları dahil edilir. Nöbet ertesi asistan kayıtları sayılmaz. İcap ayrı satırda gösterilir.</p>
+ </div>`;
+}
+function monthlyNameSearch(query){
+ const q=normalizeName(query), hits=[];
+ if(!q){
+  $("monthlyResults").classList.remove("show");
+  $("dailyView").style.display="block";
+  $("weekendView").style.display=document.querySelector('[data-tab].active')?.dataset.tab==="weekend"?"block":"none";
+  document.querySelector(".tabs").style.display="flex";
+  $("dateSelect").style.display="";
+  renderRosterTable();renderWeekendRosterTable();
+  return;
+ }
+ const add=(category,date,value,excludeFromSummary=false)=>{
+  const vals=Array.isArray(value)?value:[value];
+  vals.forEach(name=>{
+   if(name && normalizeName(name).includes(q)) hits.push({date,category,name,excludeFromSummary});
+  });
+ };
+ data.daily.forEach(d=>{
+  add("Ameliyathane nöbetçi uzman",d.date,d.expert);
+  add("Ameliyathane nöbetçi icapçı uzman",d.date,d.on_call);
+  add("Ameliyathane asistan",d.date,d.operating_room);
+  add("2. Kat Genel Yoğun Bakım",d.date,d.gybu_2);
+  add("7. Kat Genel Yoğun Bakım",d.date,d.gybu_7);
+ });
+ data.weekend.forEach(d=>{
+  add("Hafta sonu nöbetçi uzman",d.date,d.expert);
+  add("İcapçı uzman / mesai",d.date,d.on_call_expert_mesai);
+  add("Nöbetçi asistan",d.date,d.on_call_assistants);
+  add("Nöbet ertesi asistan",d.date,d.post_call_assistants,true);
+  add("Ek mesai ameliyathane",d.date,d.extra_or);
+  add("Ek mesai 2. kat",d.date,d.extra_2f);
+ });
+ hits.sort((a,b)=>a.date.localeCompare(b.date)||a.category.localeCompare(b.category,"tr"));
+ $("dailyView").style.display="none";$("weekendView").style.display="none";
+ document.querySelector(".tabs").style.display="none";$("dateSelect").style.display="none";
+ $("monthlyResults").classList.add("show");
+ renderRosterTable();renderWeekendRosterTable();
+ const weekdaySummary=weekdayDutySummary(query);
+ $("monthlyResults").innerHTML=hits.length
+  ? `<div class="sectionhead"><strong>${esc(query)} · Kasım 2026</strong><small>${hits.length} GÖREV KAYDI</small></div>${weekdaySummary}<p class="result-intro">Aşağıda aradığın ismin bulunduğu görev alanları ve tarihler listeleniyor.</p><div class="table-wrap"><table class="stats-table"><thead><tr><th style="width:22%">Tarih</th><th style="width:24%">Gün</th><th>Görev yeri</th><th>İsim</th></tr></thead><tbody>${hits.map(h=>`<tr><td>${new Date(h.date+"T12:00:00").toLocaleDateString("tr-TR",{day:"numeric",month:"long"})}</td><td>${dateDay(h.date)}</td><td>${esc(h.category)}</td><td><strong>${esc(h.name)}</strong></td></tr>`).join("")}</tbody></table></div>`
+  : `<div class="sectionhead"><strong>${esc(query)} · Kasım 2026</strong></div>${weekdaySummary}<div class="empty">Bu isim Kasım ayı nöbet listesinde bulunamadı.</div>`;
+}
+$("dateSelect").addEventListener("change",renderDaily);
+$("searchButton").addEventListener("click",()=>monthlyNameSearch($("search").value.trim()));
+$("search").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();monthlyNameSearch($("search").value.trim())}});
+$("search").addEventListener("input",()=>{if(!$("search").value.trim())monthlyNameSearch("")});
+
+document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));$("dailyView").style.display=b.dataset.tab==="daily"?"block":"none";$("weekendView").style.display=b.dataset.tab==="weekend"?"block":"none"}));
+
+const DAY_NAMES=["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
+function dateDay(date){return DAY_NAMES[new Date(date+"T12:00:00").getDay()]}
+function dateDayShort(date){return ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"][new Date(date+"T12:00:00").getDay()]}
+function escAttr(v){return esc(v).replace(/`/g,"&#96;")}
+function getWeekend(date){return data.weekend.find(x=>x.date===date)||null}
+function tableInput(date,field,value,isArray=false){
+ return `<input aria-label="${escAttr(field)}" data-date="${date}" data-field="${field}" data-array="${isArray}" value="${escAttr(isArray?(value||[]).join(", "):(value||""))}">`;
+}
+function attachRosterInputHandlers(bodyId){
+ $(bodyId).querySelectorAll("input").forEach(inp=>{
+   const save=()=>{
+     const date=inp.dataset.date,field=inp.dataset.field,isArray=inp.dataset.array==="true";
+     const value=isArray?split(inp.value):inp.value.trim();
+     if(bodyId!=="weekendRosterBody" && ["expert","on_call","operating_room","gybu_2","gybu_7"].includes(field)){
+       const d=data.daily.find(x=>x.date===date);if(!d)return;d[field]=value;
+     }else{
+       let w=getWeekend(date);
+       if(!w){w={date,expert:"",on_call_expert_mesai:"",on_call_assistants:[],post_call_assistants:[],extra_or:[],extra_2f:[]};data.weekend.push(w);data.weekend.sort((a,b)=>a.date.localeCompare(b.date))}
+       w[field]=value;
+     }
+     persistData();renderDutyStats();
+     $("tableSaved").textContent="Kaydedildi";
+     clearTimeout(window.__tableSaveTimer);
+     window.__tableSaveTimer=setTimeout(()=>$("tableSaved").textContent="",1500);
+   };
+   inp.addEventListener("input",save);
+   inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();inp.blur()}});
+ });
+}
+function renderRosterTable(){
+ const q=normalizeName($("search").value);
+ $("rosterBody").innerHTML=data.daily.filter(d=>{
+  if(!q)return true;
+  const values=[d.expert,d.on_call,...(d.operating_room||[]),...(d.gybu_2||[]),...(d.gybu_7||[])];
+  return values.some(v=>normalizeName(v).includes(q));
+ }).map(d=>{
+  const dayIndex=new Date(d.date+"T12:00:00").getDay();
+  const dayClass=dayIndex===6?"saturday":dayIndex===0?"sunday":"";
+  return `<tr class="${dayClass}">
+   <td class="datecell">${new Date(d.date+"T12:00:00").toLocaleDateString("tr-TR",{day:"numeric",month:"short"})}</td>
+   <td class="daycell"><span class="day-full">${dateDay(d.date)}</span><span class="day-short">${dateDayShort(d.date)}</span></td><td>${tableInput(d.date,"expert",d.expert)}</td><td>${tableInput(d.date,"on_call",d.on_call)}</td>
+   <td>${tableInput(d.date,"operating_room",d.operating_room,true)}</td><td>${tableInput(d.date,"gybu_2",d.gybu_2,true)}</td><td>${tableInput(d.date,"gybu_7",d.gybu_7,true)}</td>
+  </tr>`;
+ }).join("");
+ attachRosterInputHandlers("rosterBody");
+}
+function renderWeekendRosterTable(){
+ const q=normalizeName($("search").value);
+ $("weekendRosterBody").innerHTML=data.weekend.filter(w=>{
+  if(!q)return true;
+  const values=[w.expert,w.on_call_expert_mesai,...(w.on_call_assistants||[]),...(w.post_call_assistants||[]),...(w.extra_or||[]),...(w.extra_2f||[])];
+  return values.some(v=>normalizeName(v).includes(q));
+ }).slice().sort((a,b)=>a.date.localeCompare(b.date)).map(w=>`
+  <tr>
+   <td class="datecell">${new Date(w.date+"T12:00:00").toLocaleDateString("tr-TR",{day:"numeric",month:"short"})}</td>
+   <td>${tableInput(w.date,"expert",w.expert||"")}</td>
+   <td>${tableInput(w.date,"on_call_expert_mesai",w.on_call_expert_mesai||"")}</td>
+   <td>${tableInput(w.date,"on_call_assistants",w.on_call_assistants||[],true)}</td>
+   <td>${tableInput(w.date,"post_call_assistants",w.post_call_assistants||[],true)}</td>
+   <td>${tableInput(w.date,"extra_or",w.extra_or||[],true)}</td>
+   <td>${tableInput(w.date,"extra_2f",w.extra_2f||[],true)}</td>
+  </tr>`).join("");
+ attachRosterInputHandlers("weekendRosterBody");
+}
+const PERSON_GROUP_KEY="nobet-asistani-person-groups-v1";
+let personGroups={};
+try{personGroups=JSON.parse(localStorage.getItem(PERSON_GROUP_KEY)||"{}")}catch(e){personGroups={}}
+let currentSort={key:"name",dir:1};
+function personRecord(map,name,defaultGroup){
+ const n=String(name||"").trim();if(!n)return null;
+ if(!map.has(n))map.set(n,{name:n,defaultGroup:defaultGroup,main:{or:[],gy2:[],gy7:[]},analysis:{expert:[],oncall:[],weekend:[],extra:[]},days:new Set()});
+ return map.get(n);
+}
+function addPerson(map,name,group,date,mainKey=null,analysisKey=null){
+ const p=personRecord(map,name,group);if(!p)return;
+ if(mainKey)p.main[mainKey].push(date);
+ if(analysisKey)p.analysis[analysisKey].push(date);
+ if(date)p.days.add(date);
+}
+function dutyPeopleOn(date,map){
+ const d=data.daily.find(x=>x.date===date);if(!d)return;
+ addPerson(map,d.expert,"Uzman",date,null,"expert");
+ addPerson(map,d.on_call,"Uzman",date,null,"oncall");
+ (d.operating_room||[]).forEach(n=>addPerson(map,n,"Asistan",date,"or"));
+ (d.gybu_2||[]).forEach(n=>addPerson(map,n,"Asistan",date,"gy2"));
+ (d.gybu_7||[]).forEach(n=>addPerson(map,n,"Asistan",date,"gy7"));
+}
+function dateLabel(date){
+ return new Date(date+"T12:00:00").toLocaleDateString("tr-TR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+}
+function countButton(person,key,dates,displayCount=dates.length){
+ const count=displayCount;
+ return `<button class="count-link ${count===0?"zero":""}" type="button" data-person="${escAttr(person)}" data-count-key="${key}" ${count===0?"disabled":""}>${count}</button>`;
+}
+function renderDutyStats(){
+ const people=new Map();
+ // Build a unified identity list. Default labels are inferred from the source column,
+ // and can be changed by the user using the selector beside each name.
+ data.daily.forEach(d=>{
+  addPerson(people,d.expert,"Uzman",d.date,null,"expert");
+  addPerson(people,d.on_call,"Uzman",d.date,null,"oncall");
+  (d.operating_room||[]).forEach(n=>addPerson(people,n,"Asistan",d.date,"or"));
+  (d.gybu_2||[]).forEach(n=>addPerson(people,n,"Asistan",d.date,"gy2"));
+  (d.gybu_7||[]).forEach(n=>addPerson(people,n,"Asistan",d.date,"gy7"));
+ });
+ data.weekend.forEach(w=>{
+  addPerson(people,w.expert,"Uzman",w.date,null,"expert");
+  split(String(w.on_call_expert_mesai||"").replace(/\s+-\s+/g,",")).forEach(n=>addPerson(people,n,"Dış nöbetçi",w.date,null,"oncall"));
+  (w.on_call_assistants||[]).forEach(n=>addPerson(people,n,"Asistan",w.date,null,"weekend"));
+  (w.post_call_assistants||[]).forEach(n=>addPerson(people,n,"Asistan",w.date,null,"weekend"));
+  (w.extra_or||[]).forEach(n=>addPerson(people,n,"Asistan",w.date,null,"extra"));
+  (w.extra_2f||[]).forEach(n=>addPerson(people,n,"Asistan",w.date,null,"extra"));
+ });
+ // Per-person duty-date set from the primary list, used for Thu/Fri/Sat/Sun and weekend indicators.
+ const primaryDates=new Map();
+ data.daily.forEach(d=>{
+  const names=[d.expert,d.on_call,...(d.operating_room||[]),...(d.gybu_2||[]),...(d.gybu_7||[])].filter(Boolean);
+  names.forEach(name=>{
+   const n=String(name).trim();if(!primaryDates.has(n))primaryDates.set(n,new Set());
+   primaryDates.get(n).add(d.date);
+  });
+ });
+ // Each block is evaluated independently: Thursday, Friday, Saturday, Sunday.
+ const dateSet=new Set(data.daily.map(d=>d.date));
+ const addDays=(date,n)=>{
+  const x=new Date(date+"T12:00:00");x.setDate(x.getDate()+n);
+  return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`;
+ };
+ const weekBlocks=data.daily
+  .filter(d=>dateDay(d.date)==="Perşembe")
+  .map(d=>({thu:d.date,fri:addDays(d.date,1),sat:addDays(d.date,2),sun:addDays(d.date,3)}))
+  .filter(b=>[b.thu,b.fri,b.sat,b.sun].every(dt=>dateSet.has(dt)));
+ const groupNames=["Uzman","Asistan","Dış nöbetçi","Sınıflandırılmadı"];
+ const groupFor=p=>personGroups[p.name]||p.defaultGroup||"Sınıflandırılmadı";
+ const groupRows=groupNames.map(group=>{
+  let arr=[...people.values()].filter(p=>groupFor(p)===group);
+  const getMetric=(p,key)=>{
+   const dates=primaryDates.get(p.name)||new Set();
+   if(key==="thuEmptyWeekend"){
+    return weekBlocks.filter(b=>dates.has(b.thu)&&!dates.has(b.fri)&&!dates.has(b.sat)&&!dates.has(b.sun)).length;
+   }
+   if(key==="emptyWeekend"){
+    return weekBlocks.filter(b=>![b.thu,b.fri,b.sat,b.sun].some(dt=>dates.has(dt))).length;
+   }
+   if(key==="friSun"){
+    return weekBlocks.filter(b=>dates.has(b.fri)&&dates.has(b.sun)).length;
+   }
+   if(key==="sat"){
+    return weekBlocks.filter(b=>dates.has(b.sat)).length;
+   }
+   if(key==="total")return p.main.or.length+p.main.gy2.length+p.main.gy7.length;
+   if(key==="or")return p.main.or.length;
+   if(key==="gy2")return p.main.gy2.length;
+   if(key==="gy7")return p.main.gy7.length;
+   if(key==="expert")return p.analysis.expert.length;
+   if(key==="oncall")return p.analysis.oncall.length;
+   if(key==="weekend")return p.analysis.weekend.length;
+   if(key==="extra")return p.analysis.extra.length;
+   return 0;
+  };
+  arr.sort((a,b)=>{
+   let av,bv;
+   if(currentSort.key==="name"){av=a.name.toLocaleLowerCase("tr");bv=b.name.toLocaleLowerCase("tr")}
+   else {av=getMetric(a,currentSort.key);bv=getMetric(b,currentSort.key)}
+   if(av<bv)return -1*currentSort.dir;if(av>bv)return currentSort.dir;
+   return a.name.localeCompare(b.name,"tr");
+  });
+  if(!arr.length)return "";
+  const columns=[
+   ["name","İsim"],["or","Ameliyathane"],["gy2","2. Kat"],["gy7","7. Kat"],["total","Toplam"],
+   ["expert","Uzman nöbeti"],["oncall","İcap"],["thuEmptyWeekend","Perşembe nöbet + boş hafta sonu"],
+   ["emptyWeekend","Tamamen boş hafta sonu"],["friSun","Cuma + Pazar"],["sat","Cumartesi"],
+   ["weekend","Hafta sonu ek görev"],["extra","Ek mesai"]
+  ];
+  const header=columns.map(([key,label],i)=>`<th data-sort="${key}" ${i===0?'':' '}>${label}${currentSort.key===key?`<span class="sort-indicator">${currentSort.dir===1?"▲":"▼"}</span>`:""}</th>`).join("").replace('<th data-sort="name">İsim','<th data-sort="name">İsim').replace('<th data-sort="or">Ameliyathane','<th>Grup</th><th data-sort="or">Ameliyathane');
+  const rows=arr.map(p=>{
+   const dates=primaryDates.get(p.name)||new Set();
+   const dateListFor=key=>{
+    const blocks=weekBlocks.filter(b=>{
+     if(key==="thuEmptyWeekend")return dates.has(b.thu)&&!dates.has(b.fri)&&!dates.has(b.sat)&&!dates.has(b.sun);
+     if(key==="emptyWeekend")return ![b.thu,b.fri,b.sat,b.sun].some(dt=>dates.has(dt));
+     if(key==="friSun")return dates.has(b.fri)&&dates.has(b.sun);
+     if(key==="sat")return dates.has(b.sat);
+     return false;
+    });
+    if(key==="thuEmptyWeekend")return blocks.map(b=>b.thu);
+    if(key==="emptyWeekend")return blocks.flatMap(b=>[b.thu,b.fri,b.sat,b.sun]);
+    if(key==="friSun")return blocks.flatMap(b=>[b.fri,b.sun]);
+    if(key==="sat")return blocks.map(b=>b.sat);
+    return [];
+   };
+   const metric=(key,datesArr)=>countButton(p.name,key,datesArr,getMetric(p,key));
+   const mainDateList={or:p.main.or,gy2:p.main.gy2,gy7:p.main.gy7,total:[...p.main.or,...p.main.gy2,...p.main.gy7]};
+   const analysisDateList={expert:p.analysis.expert,oncall:p.analysis.oncall,weekend:p.analysis.weekend,extra:p.analysis.extra};
+   return `<tr>
+    <td class="person-name">${esc(p.name)}</td>
+    <td><select class="group-select" data-group-person="${escAttr(p.name)}"><option ${groupFor(p)==="Uzman"?"selected":""}>Uzman</option><option ${groupFor(p)==="Asistan"?"selected":""}>Asistan</option><option ${groupFor(p)==="Dış nöbetçi"?"selected":""}>Dış nöbetçi</option><option ${groupFor(p)==="Sınıflandırılmadı"?"selected":""}>Sınıflandırılmadı</option></select></td>
+    <td>${metric("or",mainDateList.or)}</td><td>${metric("gy2",mainDateList.gy2)}</td><td>${metric("gy7",mainDateList.gy7)}</td><td>${metric("total",mainDateList.total)}</td>
+    <td>${metric("expert",analysisDateList.expert)}</td><td>${metric("oncall",analysisDateList.oncall)}</td>
+    <td>${metric("thuEmptyWeekend",dateListFor("thuEmptyWeekend"))}</td>
+    <td>${metric("emptyWeekend",dateListFor("emptyWeekend"))}</td>
+    <td>${metric("friSun",dateListFor("friSun"))}</td>
+    <td>${metric("sat",dateListFor("sat"))}</td>
+    <td>${metric("weekend",analysisDateList.weekend)}</td><td>${metric("extra",analysisDateList.extra)}</td>
+   </tr>`;
+  }).join("");
+  return `<div class="unified-table-wrap"><table class="unified-table"><thead><tr class="group-band"><th colspan="14">${group}<span class="group-count">${arr.length} kişi</span></th></tr><tr>${header}</tr></thead><tbody>${rows}</tbody></table></div>`;
+ }).join("");
+ $("unifiedStats").innerHTML=groupRows||'<div class="stats-empty">Henüz personel kaydı bulunamadı.</div>';
+ // The group selectors persist classification and regroup immediately.
+ $("unifiedStats").querySelectorAll("[data-group-person]").forEach(sel=>sel.addEventListener("change",()=>{
+  personGroups[sel.dataset.groupPerson]=sel.value;
+  try{localStorage.setItem(PERSON_GROUP_KEY,JSON.stringify(personGroups))}catch(e){}
+  renderDutyStats();
+ }));
+ $("unifiedStats").querySelectorAll("[data-sort]").forEach(th=>th.addEventListener("click",()=>{
+  const key=th.dataset.sort;
+  currentSort={key,dir:currentSort.key===key?-currentSort.dir:1};
+  renderDutyStats();
+ }));
+ $("unifiedStats").querySelectorAll("[data-count-key]").forEach(btn=>btn.addEventListener("click",()=>{
+  const person=btn.dataset.person,key=btn.dataset.countKey,p=people.get(person);
+  if(!p)return;
+  const dates=primaryDates.get(person)||new Set();
+  let selectedDates=[];
+  const matchingBlocks=weekBlocks.filter(b=>{
+   if(key==="thuEmptyWeekend")return dates.has(b.thu)&&!dates.has(b.fri)&&!dates.has(b.sat)&&!dates.has(b.sun);
+   if(key==="emptyWeekend")return ![b.thu,b.fri,b.sat,b.sun].some(dt=>dates.has(dt));
+   if(key==="friSun")return dates.has(b.fri)&&dates.has(b.sun);
+   if(key==="sat")return dates.has(b.sat);
+   return false;
+  });
+  if(key==="thuEmptyWeekend")selectedDates=matchingBlocks.map(b=>b.thu);
+  else if(key==="emptyWeekend")selectedDates=matchingBlocks.flatMap(b=>[b.thu,b.fri,b.sat,b.sun]);
+  else if(key==="friSun")selectedDates=matchingBlocks.flatMap(b=>[b.fri,b.sun]);
+  else if(key==="sat")selectedDates=matchingBlocks.map(b=>b.sat);
+  else if(["or","gy2","gy7","total"].includes(key)){
+   selectedDates=key==="or"?p.main.or:key==="gy2"?p.main.gy2:key==="gy7"?p.main.gy7:[...p.main.or,...p.main.gy2,...p.main.gy7];
+  } else if(key==="expert")selectedDates=p.analysis.expert;
+  else if(key==="oncall")selectedDates=p.analysis.oncall;
+  else if(key==="weekend")selectedDates=p.analysis.weekend;
+  else if(key==="extra")selectedDates=p.analysis.extra;
+  $("datesDialogTitle").textContent=`${person} · ${btn.textContent} kayıt`;
+  $("datesDialogBody").innerHTML=selectedDates.length?`<div class="date-list">${selectedDates.sort().map(dt=>`<div class="date-list-item">${esc(dateLabel(dt))}</div>`).join("")}</div>`:'<div class="stats-empty">Bu ölçüt için tarih bulunamadı.</div>';
+  $("datesDialog").showModal();
+ }));
+}
+$("closeDatesDialog")?.addEventListener("click",()=>$("datesDialog").close());
+function persistData(){try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){console.warn("Veri kaydedilemedi",e)}}
+
+renderDaily();renderWeekend();fillEditor();renderRosterTable();renderWeekendRosterTable();renderDutyStats();
+</script>
+<script>
+(() => {
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js", { scope: "./" }).catch(() => {});
+    });
+  }
+
+  const installButton = document.getElementById("installButton");
+  if (!installButton) return;
+
+  let deferredInstallPrompt = null;
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+
+  if (isStandalone) {
+    installButton.hidden = true;
+    return;
+  }
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installButton.hidden = false;
+    installButton.textContent = "Uygulamayı yükle";
+  });
+
+  if (isIOS) {
+    installButton.hidden = false;
+    installButton.textContent = "Yükleme bilgisi";
+  }
+
+  installButton.addEventListener("click", async () => {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice.catch(() => null);
+      deferredInstallPrompt = null;
+      installButton.hidden = true;
+    } else if (isIOS) {
+      alert("iPhone veya iPad'de Safari'nin Paylaş düğmesine dokunup “Ana Ekrana Ekle” seçeneğini kullanın.");
+    }
+  });
+
+  window.addEventListener("appinstalled", () => {
+    installButton.hidden = true;
+    deferredInstallPrompt = null;
+  });
+})();
+</script>
+
+</body></html>
